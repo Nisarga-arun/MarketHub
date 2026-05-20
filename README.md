@@ -6,7 +6,7 @@
 
 **Project:** E-Commerce Web Application (Naive Approach)
 **Tech Stack:** Python, Flask, Jinja2, MySQL
-**Architecture:** Monolithic (Backend + Frontend together)
+**Architecture:** Backend + Frontend together
 
 ---
 
