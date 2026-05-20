@@ -303,7 +303,7 @@ Advanced features like payment integration and notifications are outside the sco
 
 ## Author
 
-### Nisarga Aruna
+### Nisarga A
 
 Internship Project – Flask E-Commerce Application
 
