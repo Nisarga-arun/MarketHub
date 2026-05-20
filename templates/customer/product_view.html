@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>{{ product.name }}</h1>
+    <p>
+        {% if product.category %}
+        <a href="{{ url_for('customer_product_list', category_id=product.category.id) }}" class="back-link">&larr; Back to {{ product.category.name }}</a>
+        {% else %}
+        <a href="{{ url_for('customer_category_list') }}" class="back-link">&larr; Back to Categories</a>
+        {% endif %}
+    </p>
+
+    <dl class="view-dl">
+        <dt>Product Name</dt>
+        <dd>{{ product.name }}</dd>
+        <dt>Category</dt>
+        <dd>{{ product.category.name if product.category else '—' }}</dd>
+        <dt>Description</dt>
+        <dd>{{ product.description or '—' }}</dd>
+        <dt>Price</dt>
+        <dd>{{ product.price }}</dd>
+        <dt>Available Quantity</dt>
+        <dd>{{ product.quantity }}</dd>
+        <dt>Store</dt>
+        <dd>{{ product.store.name if product.store else '—' }}</dd>
+        <dt>Product Image</dt>
+        <dd>
+            {% if product.image_path %}
+            <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}" class="product-img">
+            {% else %}
+            —
+            {% endif %}
+        </dd>
+    </dl>
+
+    {% if product.quantity > 0 %}
+    <form method="post" action="{{ url_for('customer_cart_add') }}" style="margin-top: 1rem;">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="next" value="{{ url_for('customer_product_view', product_id=product.id) }}">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.quantity }}" style="width: 4rem;">
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
+    </form>
+    {% else %}
+    <p class="muted">Out of stock.</p>
+    {% endif %}
+</div>
+{% endblock %}

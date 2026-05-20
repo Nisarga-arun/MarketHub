@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, {{ session.get('user_name', 'Admin') }}. Manage your platform from here.</p>
+
+    <nav class="admin-nav">
+        <a href="{{ url_for('admin_dashboard') }}" class="admin-nav-link">Dashboard</a>
+        <a href="{{ url_for('admin_users_list') }}" class="admin-nav-link">All Users</a>
+        <a href="{{ url_for('admin_staff_list') }}" class="admin-nav-link">Staff</a>
+        <a href="{{ url_for('admin_customers_list') }}" class="admin-nav-link">Customers</a>
+        <a href="{{ url_for('admin_category_list') }}" class="admin-nav-link">Categories</a>
+        <a href="{{ url_for('admin_store_list') }}" class="admin-nav-link">Stores</a>
+        <a href="{{ url_for('admin_store_staff_list') }}" class="admin-nav-link">Store Staff</a>
+    </nav>
+
+    <div class="admin-cards">
+        <a href="{{ url_for('admin_users_list') }}" class="admin-card">
+            <h3>Users</h3>
+            <p>View and manage all system users.</p>
+        </a>
+        <a href="{{ url_for('admin_staff_list') }}" class="admin-card">
+            <h3>Staff</h3>
+            <p>View store staff list.</p>
+        </a>
+        <a href="{{ url_for('admin_customers_list') }}" class="admin-card">
+            <h3>Customers</h3>
+            <p>View customer list.</p>
+        </a>
+        <a href="{{ url_for('admin_category_list') }}" class="admin-card">
+            <h3>Categories</h3>
+            <p>Manage product categories.</p>
+        </a>
+        <a href="{{ url_for('admin_store_list') }}" class="admin-card">
+            <h3>Stores</h3>
+            <p>Manage stores.</p>
+        </a>
+        <a href="{{ url_for('admin_store_staff_list') }}" class="admin-card">
+            <h3>Store Staff</h3>
+            <p>Assign staff to stores and category access.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

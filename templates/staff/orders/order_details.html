@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Order #{{ order.id }} - {{ store.name }} - Staff - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Order #{{ order.id }}</h1>
+    <p>
+        <a href="{{ url_for('staff_order_list') }}" class="back-link">&larr; Back to Orders</a>
+        {% if order.status not in ['delivered', 'cancelled'] %}
+        <a href="{{ url_for('staff_order_update_status', order_id=order.id) }}" class="btn btn-primary" style="margin-left: 1rem;">Update Status</a>
+        {% endif %}
+    </p>
+
+    <dl class="view-dl">
+        <dt>Customer</dt>
+        <dd>{{ order.user.name if order.user else '—' }}</dd>
+        <dt>Email</dt>
+        <dd>{{ order.user.email if order.user else '—' }}</dd>
+        <dt>Status</dt>
+        <dd>{{ order.status | capitalize }}</dd>
+        <dt>Order Date</dt>
+        <dd>{{ order.created_at.strftime('%Y-%m-%d %H:%M') if order.created_at else '—' }}</dd>
+    </dl>
+
+    <h2>Order Items (from this store)</h2>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Store</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                <tr>
+                    <td>{{ item.product.name if item.product else '—' }}</td>
+                    <td>{{ item.product.store.name if item.product and item.product.store else '—' }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ (item.price * item.quantity) | round(2) }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No items from this store.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"><strong>Subtotal (this store)</strong></td>
+                    <td><strong>{{ items_total }}</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock %}

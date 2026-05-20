@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Cart - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Shopping Cart</h1>
+    <p>
+        <a href="{{ url_for('customer_category_list') }}" class="back-link">&larr; Continue Shopping</a>
+    </p>
+
+    {% if cart_items %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('customer_cart_update', cart_item_id=item.id) }}" class="inline-form">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.quantity }}" style="width: 4rem;">
+                            <button type="submit" class="btn btn-secondary btn-small">Update</button>
+                        </form>
+                    </td>
+                    <td>{{ (item.product.price * item.quantity) | round(2) }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('customer_cart_remove', cart_item_id=item.id) }}" class="inline-form">
+                            <button type="submit" class="btn-link">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <td><strong>Total</strong></td>
+                    <td><strong>{{ total }}</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <p style="margin-top: 1rem;">
+        <form method="post" action="{{ url_for('customer_cart_place_order') }}" style="display: inline;">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </p>
+    {% else %}
+    <p class="muted">Your cart is empty. <a href="{{ url_for('customer_category_list') }}">Browse categories</a> to add products.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Add Store Staff - Admin - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Add Store Staff</h1>
+    <p><a href="{{ url_for('admin_store_staff_list') }}" class="back-link">&larr; Back to Store Staff</a></p>
+
+    <div class="admin-form-container admin-form-container--wide">
+        <form method="POST" action="{{ url_for('admin_store_staff_add') }}" class="auth-form">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" name="password" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password *</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="store_id">Store *</label>
+                <select id="store_id" name="store_id" required>
+                    <option value="">Select store</option>
+                    {% for store in stores %}
+                    <option value="{{ store.id }}">{{ store.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Category Access</label>
+                <div class="checkbox-group">
+                    {% for cat in categories %}
+                    <label class="checkbox-label"><input type="checkbox" name="category_ids" value="{{ cat.id }}"> {{ cat.name }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Store Staff</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

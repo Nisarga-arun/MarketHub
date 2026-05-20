@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Products - {{ category.name }} - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Products — {{ category.name }}</h1>
+    <p>
+        <a href="{{ url_for('customer_category_list') }}" class="back-link">&larr; Back to Categories</a>
+    </p>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Image</th>
+                    <th>Store</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ (product.description or '—')[:80] }}{{ '…' if product.description and product.description|length > 80 else '' }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        {% if product.image_path %}
+                        <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}" class="product-thumb">
+                        {% else %}
+                        —
+                        {% endif %}
+                    </td>
+                    <td>{{ product.store.name if product.store else '—' }}</td>
+                    <td>
+                        <a href="{{ url_for('customer_product_view', product_id=product.id) }}">View</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7">No products in this category yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

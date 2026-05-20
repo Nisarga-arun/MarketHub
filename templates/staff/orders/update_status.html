@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Update Order Status - Order #{{ order.id }} - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Update Order Status — Order #{{ order.id }}</h1>
+    <p>
+        <a href="{{ url_for('staff_order_details', order_id=order.id) }}" class="back-link">&larr; Back to Order</a>
+    </p>
+
+    <p class="muted">Current status: <strong>{{ order.status | capitalize }}</strong></p>
+    <p class="muted">Status can only move forward: Placed → Packed → Shipped → Delivered, or mark as Cancelled.</p>
+
+    {% if allowed_statuses %}
+    <form method="post">
+        <div class="form-group">
+            <label for="status">New Status</label>
+            <select name="status" id="status" required>
+                {% for s in allowed_statuses %}
+                <option value="{{ s }}" {% if loop.first %}selected{% endif %}>{{ s | capitalize }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Status</button>
+    </form>
+    {% else %}
+    <p class="muted">No further status changes allowed. Order is {{ order.status | capitalize }}.</p>
+    {% endif %}
+</div>
+{% endblock %}

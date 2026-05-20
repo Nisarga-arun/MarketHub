@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="customer-dashboard admin-page">
+    <h1>Customer Dashboard</h1>
+    <p>Welcome, {{ session.get('user_name', 'Customer') }}. Browse products and manage your account from here.</p>
+
+    <nav class="admin-nav">
+        <a href="{{ url_for('customer_dashboard') }}" class="admin-nav-link">Dashboard</a>
+        <a href="{{ url_for('customer_category_list') }}" class="admin-nav-link">Categories</a>
+        <a href="{{ url_for('customer_order_list') }}" class="admin-nav-link">My Orders</a>
+        <a href="{{ url_for('customer_profile') }}" class="admin-nav-link">My Profile</a>
+    </nav>
+
+    <div class="order-summary" style="margin-bottom: 1.5rem;">
+        <h2>Orders</h2>
+        <p>
+            <strong>Active orders:</strong> {{ active_orders_count | default(0) }} &nbsp;
+            <strong>Delivered:</strong> {{ delivered_orders_count | default(0) }}
+        </p>
+        <p>
+            <a href="{{ url_for('customer_order_list') }}" class="btn btn-primary">View My Orders</a>
+            <a href="{{ url_for('customer_order_history') }}" class="btn btn-secondary" style="margin-left: 0.5rem;">Order History</a>
+        </p>
+    </div>
+
+    <div class="admin-cards">
+        <a href="{{ url_for('customer_category_list') }}" class="admin-card">
+            <h3>Browse Categories</h3>
+            <p>View product categories and browse items.</p>
+        </a>
+        <a href="{{ url_for('customer_order_list') }}" class="admin-card">
+            <h3>My Orders</h3>
+            <p>View and track your orders.</p>
+        </a>
+        <a href="{{ url_for('customer_profile') }}" class="admin-card">
+            <h3>My Profile</h3>
+            <p>View your account details.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

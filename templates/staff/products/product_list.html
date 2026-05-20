@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Products - {{ store.name }} - Staff - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Products — {{ store.name }}</h1>
+    <p>
+        <a href="{{ url_for('staff_dashboard') }}" class="back-link">&larr; Back to Dashboard</a>
+        <a href="{{ url_for('staff_product_add') }}" class="btn btn-primary" style="margin-left: 1rem;">Add Product</a>
+    </p>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Product Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category.name if product.category else '—' }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        {% if product.image_path %}
+                        <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}" class="product-thumb">
+                        {% else %}
+                        —
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('staff_product_view', product_id=product.id) }}">View</a>
+                        &nbsp;|&nbsp;
+                        <a href="{{ url_for('staff_product_edit', product_id=product.id) }}">Edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No products in this store yet. <a href="{{ url_for('staff_product_add') }}">Add one</a>.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

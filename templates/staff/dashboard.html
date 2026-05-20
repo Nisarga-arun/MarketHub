@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Dashboard - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Staff Dashboard</h1>
+    <p>Welcome, {{ session.get('user_name', 'Staff') }}. Manage your store from here.</p>
+
+    {% if not store %}
+    <div class="alert alert-info">You are not assigned to a store yet. Contact an administrator.</div>
+    {% else %}
+    <nav class="admin-nav">
+        <a href="{{ url_for('staff_dashboard') }}" class="admin-nav-link">Dashboard</a>
+        <a href="{{ url_for('staff_store_details') }}" class="admin-nav-link">My Store</a>
+        <a href="{{ url_for('staff_product_list') }}" class="admin-nav-link">Products</a>
+        <a href="{{ url_for('staff_order_list') }}" class="admin-nav-link">Orders</a>
+    </nav>
+
+    <div class="admin-cards">
+        <a href="{{ url_for('staff_store_details') }}" class="admin-card">
+            <h3>My Store</h3>
+            <p>View your assigned store details.</p>
+        </a>
+        <a href="{{ url_for('staff_product_list') }}" class="admin-card">
+            <h3>Products</h3>
+            <p>View products in your store.</p>
+        </a>
+        <a href="{{ url_for('staff_order_list') }}" class="admin-card">
+            <h3>Orders</h3>
+            <p>View and update orders for your store.</p>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

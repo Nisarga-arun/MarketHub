@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Stores - Admin - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>Stores</h1>
+    <p>
+        <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back to Dashboard</a>
+        <a href="{{ url_for('admin_store_add') }}" class="btn btn-primary" style="margin-left: 1rem;">Add Store</a>
+    </p>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for store in stores %}
+                <tr>
+                    <td>{{ store.id }}</td>
+                    <td>{{ store.name }}</td>
+                    <td>{{ store.location or '—' }}</td>
+                    <td>{{ store.created_at.strftime('%Y-%m-%d %H:%M') if store.created_at else '—' }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_store_view', store_id=store.id) }}">View</a>
+                        &nbsp;|&nbsp;
+                        <a href="{{ url_for('admin_store_edit', store_id=store.id) }}">Edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No stores yet. <a href="{{ url_for('admin_store_add') }}">Add one</a>.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

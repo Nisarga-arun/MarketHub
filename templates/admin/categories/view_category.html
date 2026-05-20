@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} - Admin - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>{{ category.name }}</h1>
+    <p>
+        <a href="{{ url_for('admin_category_list') }}" class="back-link">&larr; Back to Categories</a>
+        <a href="{{ url_for('admin_category_edit', category_id=category.id) }}" class="btn btn-primary" style="margin-left: 1rem;">Edit</a>
+    </p>
+
+    <dl class="view-dl">
+        <dt>ID</dt>
+        <dd>{{ category.id }}</dd>
+        <dt>Name</dt>
+        <dd>{{ category.name }}</dd>
+        <dt>Description</dt>
+        <dd>{{ category.description or '—' }}</dd>
+        <dt>Created Date</dt>
+        <dd>{{ category.created_at.strftime('%Y-%m-%d %H:%M') if category.created_at else '—' }}</dd>
+    </dl>
+</div>
+{% endblock %}

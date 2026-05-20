@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ store_staff.user.name }} - Store Staff - Admin - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1>{{ store_staff.user.name }}</h1>
+    <p>
+        <a href="{{ url_for('admin_store_staff_list') }}" class="back-link">&larr; Back to Store Staff</a>
+        <a href="{{ url_for('admin_store_staff_edit', store_staff_id=store_staff.id) }}" class="btn btn-primary" style="margin-left: 1rem;">Edit</a>
+        <form method="POST" action="{{ url_for('admin_store_staff_toggle_active', store_staff_id=store_staff.id) }}" style="display:inline; margin-left: 0.5rem;">
+            <button type="submit" class="btn {{ 'btn-secondary' if store_staff.is_active else 'btn-primary' }}">
+                {{ 'Deactivate' if store_staff.is_active else 'Activate' }}
+            </button>
+        </form>
+    </p>
+
+    <dl class="view-dl">
+        <dt>Staff Name</dt>
+        <dd>{{ store_staff.user.name }}</dd>
+        <dt>Email</dt>
+        <dd>{{ store_staff.user.email }}</dd>
+        <dt>Assigned Store</dt>
+        <dd>{{ store_staff.store.name }}</dd>
+        <dt>Category Access</dt>
+        <dd>{{ store_staff.categories|map(attribute='name')|join(', ') or 'None' }}</dd>
+        <dt>Status</dt>
+        <dd>{{ 'Active' if store_staff.is_active else 'Inactive' }}</dd>
+        <dt>Created Date</dt>
+        <dd>{{ store_staff.created_at.strftime('%Y-%m-%d %H:%M') if store_staff.created_at else '—' }}</dd>
+    </dl>
+</div>
+{% endblock %}

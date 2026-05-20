@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Dashboard - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="dashboard-placeholder">
+    <h1>Staff Dashboard</h1>
+    <p>Welcome, {{ session.get('user_name', 'Staff') }}. This is the staff dashboard placeholder.</p>
+    <p>Store and product features will be implemented in later tasks.</p>
+</div>
+{% endblock %}
