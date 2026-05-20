@@ -22,13 +22,6 @@ Sample users from `database/seed_data.sql` (for testing):
 
 ---
 
-# Task 1 — Understand E-Commerce Workflow
-
-Before starting development, it is important to understand how an **E-Commerce system works in real life**.
-This helps developers design the correct database structure, user roles, and workflows.
-
----
-
 # 1. What is an E-Commerce System?
 
 An **E-Commerce system (Electronic Commerce system)** is a software platform that allows businesses to **sell products or services online**.
